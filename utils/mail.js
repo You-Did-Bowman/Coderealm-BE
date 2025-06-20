@@ -40,7 +40,7 @@ export const passwordResetTemplate = (name, token) => {
       <h1>Hi ${name},</h1>
       <p>You requested to reset your password.</p>
       <p>
-        <a href="http://localhost:5173/users/reset-password/${token}">
+        <a href="${process.env.FE_HOST}/users/reset-password/${token}">
           Click here to reset your password
         </a>
       </p>
@@ -54,7 +54,7 @@ export const passwordResetTemplate = (name, token) => {
        <div style="font-family: Arial, sans-serif; text-align: center; padding: 30px; background-color: #f9f9f9;">
   <h1 style="color: #333;">Welcome, ${name}!</h1>
   <p style="font-size: 18px; color: #555;">Please confirm your email address by clicking the button below:</p>
-  <a href="http://localhost:5000/users/verify/${token}" 
+  <a href="${process.env.BE_HOST + PORT}/users/verify/${token}" 
      style="display: inline-block; margin-top: 20px; padding: 12px 24px; font-size: 16px; color: white; background-color: #4CAF50; text-decoration: none; border-radius: 5px;">
     Confirm Email
   </a>
@@ -90,9 +90,9 @@ const transporter = nodemailer.createTransport({
         <p style="font-size: 18px; color: #555;">
         A friend would like to invite you to join him on an adventure on Coderealm and learn how to create your own websites using HTML, CSS and JavaScript.<br><br>
         
-        If you would like to find out more, please visit us:<a href="www.google.com">Coderealm</a> <br><br>
+        If you would like to find out more, please visit us:<a href="${process.env.FE_HOST}/">Coderealm</a> <br><br>
         
-        If you would like to register, click here:<a href="http://localhost:5173/register" > Register Now</a>
+        If you would like to register, click here:<a href="${process.env.FE_HOST}/register" > Register Now</a>
         <br><br>
         We would be delighted to welcome you to Coderealms soon.
         <br>
