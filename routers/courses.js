@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getCoursesWithLessons,
+  getCoursesWithLessonTitles,
   getExercisesForLesson,
   getLessonContent,
   getExerciseById,
@@ -25,6 +26,20 @@ router.get("/", async (req, res, next) => {
     res.json(courses);
   } catch (error) {
     console.error("Error fetching courses:", error);
+    next(error);
+  }
+});
+
+
+// Add this new route
+router.get("/minimal", async (req, res, next) => {
+  try {
+    const courses = await getCoursesWithLessonTitles();
+    if (!courses || courses.length === 0) {
+      return res.status(404).json({ message: "No courses found" });
+    }
+    res.json(courses);
+  } catch (error) {
     next(error);
   }
 });
