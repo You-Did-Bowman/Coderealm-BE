@@ -6,6 +6,14 @@ import {verifyEmailTemplate, verifyUserByEmail, passwordResetTemplate } from "..
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+const getCookieOptions = () => ({
+  httpOnly: false,
+  secure: true,
+  sameSite: 'none',
+  maxAge: 3600000, // 1 hour
+  path: '/'
+});
+
 // Register a new user and send a verification email
 export const registerUser = async (req, res) => {
   const { username, email, password, role = "student" } = req.body;
@@ -98,12 +106,8 @@ export const loginUser = async (req, res) => {
     // Generate JWT and set it as a cookie
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-    res.cookie('token', token, {
-      httpOnly: false,
-      secure: false,
-      sameSite: 'lax',
-      maxAge: 3600000
-    });
+   res.cookie('token', token, getCookieOptions());
+
 
     res.status(200).json({ message: "Login successful", token, id: user.id });
 
@@ -115,12 +119,7 @@ export const loginUser = async (req, res) => {
 
 // Log out user (placeholder, no token blacklisting here)
 export const logoutUser = (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: false,
-    sameSite: "lax",
-    secure: false,// Set true in production
-    path: '/'
-  });
+  res.clearCookie("token", getCookieOptions());
   res.status(200).json({ message: "User logged out successfully" });
 };
 
@@ -191,12 +190,7 @@ export const googleLogin = async (req, res) => {
     });
 
     // Set cookie
-    res.cookie("token", token, {
-      httpOnly: false,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 3600000
-    });
+    res.cookie("token", token, getCookieOptions());
 
     // Send response
     const response = { 
@@ -262,13 +256,7 @@ export const refreshToken = async (req, res) => {
         { expiresIn: "1h" }
       );
 
-      // Set the new token in cookie
-      res.cookie("token", newToken, {
-        httpOnly: false,
-        secure: false,
-        sameSite: "lax",
-        maxAge: 3600000
-      });
+     res.cookie("token", newToken, getCookieOptions());
 
       // Return the new token
       res.status(200).json({ token: newToken });
