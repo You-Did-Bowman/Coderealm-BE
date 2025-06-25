@@ -7,9 +7,9 @@ import {verifyEmailTemplate, verifyUserByEmail, passwordResetTemplate } from "..
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const getCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  httpOnly: false,
+  secure: true,
+  sameSite: 'none',
   maxAge: 3600000, // 1 hour
   path: '/'
 });

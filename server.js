@@ -1,4 +1,5 @@
 import express from "express";
+// import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
@@ -7,7 +8,7 @@ import { fileURLToPath } from 'url';
 import { createError } from "./utils/errors.js";
 import { connect2DB } from "./utils/db.js";
 
-// Import Routes
+// ------------- Import Routes ---------------
 import evaluationsRouter from './routers/evaluations.js';
 import usersRouter from './routers/users.js';
 import coursesRouter from './routers/courses.js';
@@ -20,49 +21,31 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Create application
+/* ------------ create application ------------ */
 const app = express();
 
-// Initialize server
+/* --------- initialize server -------- */
 const startServer = async () => {
   try {
-    // Create DB connection
+    /* --------- create a connection to DB -------- */
     await connect2DB();
 
-    // ------------------ Middleware ------------------
+    /* ---------------- middleware ---------------- */
     app.use(cookieParser());
-    
-    // Dynamic CORS configuration (CRITICAL FOR PRODUCTION)
-    const corsOptions = {
-      origin: process.env.NODE_ENV === 'production' 
-        ? process.env.FE_HOST 
-        : 'http://localhost:5173',
-      credentials: true, // Allow credentials (cookies)
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
-    };
-    app.use(cors(corsOptions));
-    
+    app.use(cors({ origin: process.env.FE_HOST, credentials: true, methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] }));
+    // app.use(morgan("dev"));
     app.use(express.json());
 
-    // ------------------ Routers -----------------
+    /* ------------------ routers ----------------- */
     app.use("/users", usersRouter);
     app.use("/user", usersRouter);
     app.use("/api/courses", coursesRouter);  
     app.use('/api/evaluations', evaluationsRouter);
     app.use('/api/user', userRoutes);
     app.use("/chatbot", chatbotRouter); 
-    app.use('/posts', postsRouter);  
+    app.use('/posts',postsRouter)  
 
-    // Serve static files in production
-    if (process.env.NODE_ENV === 'production') {
-      app.use(express.static(path.join(__dirname, '../client/dist')));
-      
-      app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-      });
-    }
-
-    // ---------------- Error handler --------------
+    /* --------------- error handler -------------- */
     app.use((req, res, next) => {
       next(createError("Route not defined!", 404));
     });
@@ -71,20 +54,15 @@ const startServer = async () => {
       res.status(error.status || 500).json({ msg: error.message });
     });
 
-    // ------------------- Port -------------------
+    /* ------------------- port ------------------- */
     const port = process.env.PORT || 5001;
-    app.listen(port, () => {
-      console.log(`
-        🚀 Server running in ${process.env.NODE_ENV || 'development'} mode
-        🔗 URL: ${process.env.BE_HOST || `http://localhost:${port}`}
-        ⚠️ CORS Origin: ${corsOptions.origin}
-        🍪 Cookie Policy: ${process.env.NODE_ENV === 'production' ? 
-          'Secure/None' : 'Insecure/Lax'}
-      `);
-    });
+    app.listen(
+      port,
+      console.log(`🚀 Server is running on: ${process.env.BE_HOST}${port}`)
+    );
   } catch (error) {
-    console.error("❌ Failed to start server:", error.message);
-    process.exit(1);
+    console.error("❌ Failed to start the server:", error.message);
+    process.exit(1); // Exit the process with a failure code
   }
 };
 
