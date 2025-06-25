@@ -14,6 +14,8 @@ import {
   dislikePost,
   removeDislike,
   countAllPosts,
+  countCommunityPosts
+  
 } from "../controllers/postsController.js";
 import { authenticateUser } from "../middlewares/authMiddleware.js";
 
@@ -53,9 +55,10 @@ router.patch("/comments/:id", authenticateUser, editComment);
 router.delete("/comments/:id", authenticateUser, deleteComment);
 
 // JB: fetch posts by id
-router.get("/userPosts/:id", getPostsbyId);
+router.get("/userPosts/:id",authenticateUser, getPostsbyId);
 
 // JB: count all Posts
-router.get("/count/allPosts", countAllPosts);
-
+router.get("/count/allPosts",authenticateUser, countAllPosts);
+ // JB: count community posts
+ router.get("/count/community/:communityId", authenticateUser, countCommunityPosts)
 export default router;
