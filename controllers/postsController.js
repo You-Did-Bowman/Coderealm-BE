@@ -558,3 +558,21 @@ export const countAllPosts = async (req, res) => {
     console.error("BE - Error counting all posts; ", error);
   }
 }
+
+
+export const countCommunityPosts = async (req, res) => {
+  try {
+    const db = getDB();
+    const { communityId } = req.params;
+
+    const [countResult] = await db.query(
+      `SELECT COUNT(*) as count FROM posts WHERE community_id = ?`,
+      [communityId]
+    );
+
+    res.json(countResult[0]);
+  } catch (error) {
+    console.error("BE - Error counting community posts: ", error);
+    res.status(500).json({ message: "Error counting community posts" });
+  }
+};
