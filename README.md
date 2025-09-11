@@ -2,7 +2,7 @@
 
 ## About The Project
 
-Coderealm-BE is the backend service for the Coderealm.
+Coderealm-BE is the backend service for the Coderealm platform — a gamified learning environment for web development.
 
 Coderealm is an educational role-playing platform designed to teach web development in an engaging, game-like environment.
 It combines the features of:
@@ -109,6 +109,6 @@ Judith Bohmann
 <br>
 Mail: ju.bohmann@gmx.de
 <br><br>
-Repo-Link: <a href="https://github.com/You-Did-Bowman/Coderealm-FE">github.com/You-Did-Bowman/Coderealm-FE</a>
+Repo-Link: <a href="https://github.com/You-Did-Bowman/Coderealm-BE">github.com/You-Did-Bowman/Coderealm-BE</a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
