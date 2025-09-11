@@ -19,7 +19,7 @@ Check out the live version of Coderealm <a href="https://coderealm-e7af.onrender
 <br><br>
 **Disclaimer:** It may take some time for the backend to load if Coderealm has not been visited for a long time. Therefore, it will take a while to load when you log in for the first time. 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#">back to top</a>)</p>
 
 
 ## Built With
@@ -45,7 +45,7 @@ A standard for securely transmitting information between parties as a JSON objec
 - **nodemailer** <br>
 A Node.js library for sending emails, often used for notifications, password resets, or confirmations.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#">back to top</a>)</p>
 
 ## Project Structure
 **controllers/**
@@ -80,7 +80,7 @@ Example configuration file with required environment variables (PORT, keys, etc.
 <br>
 Application entry point. Initializes Express, middleware, and routes.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#">back to top</a>)</p>
 
 <!-- ROADMAP -->
 <!-- ## Roadmap
@@ -111,4 +111,4 @@ Mail: ju.bohmann@gmx.de
 <br><br>
 Repo-Link: <a href="https://github.com/You-Did-Bowman/Coderealm-BE">github.com/You-Did-Bowman/Coderealm-BE</a>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#">back to top</a>)</p>
